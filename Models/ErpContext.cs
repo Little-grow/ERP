@@ -6,10 +6,6 @@ namespace ERPSystem.Models;
 
 public partial class ErpContext : DbContext
 {
-    public ErpContext()
-    {
-            
-    }
     public ErpContext(DbContextOptions<ErpContext> options)
         : base(options)
     {
@@ -29,8 +25,8 @@ public partial class ErpContext : DbContext
 
     public virtual DbSet<LinesOfBusiness> LinesOfBusinesses { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("DefaultConnection");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    => optionsBuilder.UseSqlServer("DefaultConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

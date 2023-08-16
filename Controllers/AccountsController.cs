@@ -1,4 +1,5 @@
 ﻿using ERPSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Identity.Client;
@@ -10,6 +11,7 @@ namespace ERPSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] 
     public class AccountsController : ControllerBase
     {
         private readonly ErpContext _context;
