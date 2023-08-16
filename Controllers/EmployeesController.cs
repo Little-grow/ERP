@@ -50,7 +50,6 @@ namespace ERPSystem.Controllers
         }
 
         // PUT: api/Employees/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
@@ -87,7 +86,7 @@ namespace ERPSystem.Controllers
         {
           if (_context.Employees == null)
           {
-              return Problem("Entity set 'ErpContext.Employees'  is null.");
+              return Problem("Entity set is null.");
           }
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
