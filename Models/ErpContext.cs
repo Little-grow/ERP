@@ -52,10 +52,6 @@ public partial class ErpContext : DbContext
             entity.Property(e => e.NationalId)
                 .HasMaxLength(14)
                 .HasColumnName("NationalID");
-
-            entity.HasOne(d => d.Account).WithMany(p => p.Employees)
-                .HasForeignKey(d => d.AccountId)
-                .HasConstraintName("FK_Employees_AccountID");
         });
 
         modelBuilder.Entity<EmployeeLanguage>(entity =>
@@ -73,9 +69,7 @@ public partial class ErpContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeLanguages)
-                .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__EmployeeL__Emplo__5165187F");
+           
 
             entity.HasOne(d => d.Language).WithMany(p => p.EmployeeLanguages)
                 .HasForeignKey(d => d.LanguageId)
@@ -117,10 +111,6 @@ public partial class ErpContext : DbContext
             entity.Property(e => e.LineOfBusinessId).HasColumnName("LineOfBusinessID");
             entity.Property(e => e.AccountId).HasColumnName("AccountID");
             entity.Property(e => e.LineOfBusinessName).HasMaxLength(250);
-
-            entity.HasOne(d => d.Account).WithMany(p => p.LinesOfBusinesses)
-                .HasForeignKey(d => d.AccountId)
-                .HasConstraintName("FK_LinesOfBusiness_AccountID");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -15,7 +15,7 @@ public partial class Admin
     public string Email { get; set; } = "";
     [Required]
     [Column(TypeName = "varbinary(MAX)")]
-    public byte[] Password { get; set; }
+    public byte[]? Password { get; set; } 
     [Column(TypeName = "varbinary(MAX)")]
-    public byte[] SaltKey { get; set; }
+    public byte[]? SaltKey { get; set; }
 }

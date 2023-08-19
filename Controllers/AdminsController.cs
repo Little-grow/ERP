@@ -13,7 +13,7 @@ using System.Text;
 
 namespace ERP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminsController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace ERP.Controllers
         [HttpPost("login")]
         public IActionResult Login(CreateAdmin createAdmin)
         {
-            var admin = _context.Admins.FirstOrDefault();
+            var admin = _context.Admins.FirstOrDefault(a => a.Email == createAdmin.Email);
 
             if (admin == null)
             {
@@ -70,7 +70,7 @@ namespace ERP.Controllers
         //Hashing method
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new System.Security.Cryptography.HMACSHA512()) // Algortithm Hash based message authentication code 
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
@@ -85,7 +85,8 @@ namespace ERP.Controllers
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < computedHash.Length; i++)
                 {
-                    if (computedHash[i] != passwordHash[i]) return false;
+                    if (computedHash[i] != passwordHash[i])
+                        return false;
                 }
             }
             return true;

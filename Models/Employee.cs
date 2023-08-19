@@ -7,17 +7,13 @@ public partial class Employee
 {
     public int Id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
 
-    public string? NationalId { get; set; }
+    public string NationalId { get; set; } = string.Empty;
 
     public DateTime DateOfBirth { get; set; }
 
     public int? Age { get; set; }
 
     public int? AccountId { get; set; }
-
-    public virtual Account? Account { get; set; }
-
-    public virtual ICollection<EmployeeLanguage> EmployeeLanguages { get; set; } = new List<EmployeeLanguage>();
 }

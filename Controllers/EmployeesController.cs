@@ -53,43 +53,47 @@ namespace ERPSystem.Controllers
 
         // PUT: api/Employees/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public async Task<IActionResult> PutEmployee(int id,[FromBody] EmployeeDto updatedEmployee)
         {
-            if (id != employee.Id)
+            var employee = _context.Employees.FirstOrDefault(a => a.Id == id);
+            if (employee  == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(employee).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                //_context.Entry(employee).State = EntityState.Modified;
+				employee.Name = updatedEmployee.Name;
+				employee.NationalId = updatedEmployee.NationalId;
+				employee.DateOfBirth = updatedEmployee.DateOfBirth;
+                employee.AccountId = updatedEmployee.AccountId;
+				await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!EmployeeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("An error occured while updating the employee.");
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<Employee>> PostEmployee(EmployeeDto NewEmployee)
         {
           if (_context.Employees == null)
           {
               return Problem("Entity set is null.");
           }
+            var employee = new Employee()
+            {
+                Name = NewEmployee.Name,
+                NationalId = NewEmployee.NationalId,
+                DateOfBirth = NewEmployee.DateOfBirth, 
+                AccountId = NewEmployee.AccountId
+            };
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
 
@@ -113,7 +117,7 @@ namespace ERPSystem.Controllers
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool EmployeeExists(int id)
