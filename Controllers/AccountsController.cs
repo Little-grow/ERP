@@ -11,6 +11,7 @@ namespace ERPSystem.Controllers
 {
 	[Route("api/[controller]/[action]")]
 	[ApiController]
+	[Authorize]
 	public class AccountsController : ControllerBase
 	{
 		private readonly ErpContext _context;

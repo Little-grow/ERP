@@ -26,7 +26,7 @@ namespace ERP.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public IActionResult Login(CreateAdmin createAdmin)
         {
             var admin = _context.Admins.FirstOrDefault(a => a.Email == createAdmin.Email);
@@ -93,7 +93,6 @@ namespace ERP.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
         public async Task<string> Register(CreateAdmin admin)
         {
             byte[] passwordHash, passwordSalt;

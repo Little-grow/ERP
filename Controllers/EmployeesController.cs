@@ -24,23 +24,23 @@ namespace ERPSystem.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public ActionResult<IEnumerable<Employee>> GetEmployees()
         {
-          if (_context.Employees == null)
-          {
-              return NotFound();
-          }
-            return await _context.Employees.ToListAsync();
+            if (_context.Employees == null)
+            {
+                return NotFound();
+            }
+            return Ok(_context.Employees.ToList());
         }
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
-          if (_context.Employees == null)
-          {
-              return NotFound();
-          }
+            if (_context.Employees == null)
+            {
+                return NotFound();
+            }
             var employee = await _context.Employees.FindAsync(id);
 
             if (employee == null)
@@ -53,10 +53,10 @@ namespace ERPSystem.Controllers
 
         // PUT: api/Employees/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id,[FromBody] EmployeeDto updatedEmployee)
+        public async Task<IActionResult> PutEmployee(int id, [FromBody] EmployeeDto updatedEmployee)
         {
             var employee = _context.Employees.FirstOrDefault(a => a.Id == id);
-            if (employee  == null)
+            if (employee == null)
             {
                 return NotFound();
             }
@@ -64,11 +64,11 @@ namespace ERPSystem.Controllers
             try
             {
                 //_context.Entry(employee).State = EntityState.Modified;
-				employee.Name = updatedEmployee.Name;
-				employee.NationalId = updatedEmployee.NationalId;
-				employee.DateOfBirth = updatedEmployee.DateOfBirth;
+                employee.Name = updatedEmployee.Name;
+                employee.NationalId = updatedEmployee.NationalId;
+                employee.DateOfBirth = updatedEmployee.DateOfBirth;
                 employee.AccountId = updatedEmployee.AccountId;
-				await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -83,15 +83,15 @@ namespace ERPSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(EmployeeDto NewEmployee)
         {
-          if (_context.Employees == null)
-          {
-              return Problem("Entity set is null.");
-          }
+            if (_context.Employees == null)
+            {
+                return Problem("Entity set is null.");
+            }
             var employee = new Employee()
             {
                 Name = NewEmployee.Name,
                 NationalId = NewEmployee.NationalId,
-                DateOfBirth = NewEmployee.DateOfBirth, 
+                DateOfBirth = NewEmployee.DateOfBirth,
                 AccountId = NewEmployee.AccountId
             };
             _context.Employees.Add(employee);
