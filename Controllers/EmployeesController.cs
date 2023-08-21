@@ -12,7 +12,7 @@ namespace ERPSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class EmployeesController : ControllerBase
     {
         private readonly ErpContext _context;
@@ -81,7 +81,7 @@ namespace ERPSystem.Controllers
         // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(EmployeeDto NewEmployee)
+        public IActionResult PostEmployee([FromBody] EmployeeDto NewEmployee)
         {
             if (_context.Employees == null)
             {
@@ -95,9 +95,9 @@ namespace ERPSystem.Controllers
                 AccountId = NewEmployee.AccountId
             };
             _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
+            return Ok();
         }
 
         // DELETE: api/Employees/5

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ERPSystem.Models;
 
-public partial class Employee
+public class Employee
 {
     public int Id { get; set; }
 
