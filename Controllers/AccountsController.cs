@@ -20,23 +20,28 @@ namespace ERPSystem.Controllers
 		{
 			_context = context;
 		}
-		// GET: api/<AccountsController>
+		
+
 		[HttpGet]
 		public IEnumerable<Account> Get()
 		{
 			return _context.Accounts.ToList();
 		}
 
-		// GET api/<AccountsController>/5
-		[HttpGet("{id}")]
-		public IActionResult Get(int id)
-		{
-			var account = _context.Accounts.SingleOrDefault(a => a.AccountId == id);
-			return Ok(account);
-		}
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            return Ok(account);
+        }
 
-		// POST api/<AccountsController>
-		[HttpPost]
+
+        // POST api/<AccountsController>
+        [HttpPost]
 		public IActionResult Post([FromBody] AccountDto account)
 		{
 			Account newAccount = new Account()
@@ -50,9 +55,9 @@ namespace ERPSystem.Controllers
 
 		// PUT api/accounts/5
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, [FromBody] Account updatedAccount)
+		public IActionResult Put(int id, [FromBody] AccountDto updatedAccount)
 		{
-			var account = _context.Accounts.FirstOrDefault(a => a.AccountId == id);
+			var account = _context.Accounts.Find(id);
 			if (account == null)
 			{
 				return NotFound();
